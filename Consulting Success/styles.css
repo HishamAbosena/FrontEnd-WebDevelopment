@@ -1,0 +1,422 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body,
+html {
+    /* width: 100%; */
+    font-family: sans-serif;
+    font-size: 16px;
+    background-color: white;
+    color: black;
+    scroll-behavior: smooth;
+}
+#top{
+    background-color: lightskyblue;
+    color: white;
+    width: 60px;
+    height: 30px;
+    border-color: transparent;
+    border-radius: 50px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fa-bars {
+    margin: 5px 50%;
+    cursor: pointer;
+}
+
+.first,
+.second,
+.third,
+.fourth,
+.fifth,
+.seventh,
+.eighth,
+footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 3px 5px;
+    text-align: center;
+    margin: 15px 0px;
+}
+
+.sixth {
+    display: block;
+}
+
+a {
+    color: #aaa;
+}
+
+.container {
+    background-color: white;
+}
+
+.toggleon {
+    display: block;
+}
+
+nav {
+    background-color: #bbb;
+    height: max-content;
+    display: none;
+}
+nav a{
+    margin: 5px;
+    padding: 5px;
+    display: block;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+}
+
+.first *,
+.second *,
+.fourth *,
+.fifth *,
+.sixth *,
+.seventh *,
+.eighth * {
+    padding: 8px;
+    margin: 5px;
+}
+
+.first {
+    background-color: rgba(240, 240, 240, 0.6);
+}
+
+img {
+    width: 100%;
+}
+
+.fifth img {
+    border-radius: 50%;
+}
+
+.span {
+    /* display: block; */
+    position: relative;
+    top: 50px;
+    width: 75%;
+
+}
+
+.span span {
+    display: block;
+    background-color: #7382f0;
+    margin: 2px 0px;
+    color: white;
+}
+
+.line {
+    /* height: 1px; */
+    width: 75%;
+    margin: 20px 50%;
+    background-color: blue;
+}
+
+.doubleline,
+h4 {
+    color: white;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    margin: 20px 50%;
+    background-color: blue;
+}
+
+h5 {
+    color: #7388fb;
+}
+
+.third {
+    background-image: linear-gradient(#fff 40%, blue 40%);
+}
+
+.fifth {
+    background-image: linear-gradient(#fff 20%, blue 20% 60%, #fff 60%);
+}
+
+.third span {
+    display: block;
+    background-color: white;
+    width: 75%;
+    margin: 10px 0px;
+    box-shadow: 0px 0px 10px #bbb;
+    padding: 2px;
+    /* position: fixed; */
+}
+
+.third span * {
+    margin: 5px 0px;
+}
+
+.third span i {
+    background-color: #7382f0;
+    padding: 18px 0px;
+    width: 50px;
+    height: 50px;
+    color: white;
+}
+
+.fourth,
+.container,
+.sixth,
+.eighth {
+    width: 75%;
+    margin: auto;
+}
+
+.fourth ul {
+    margin-top: 15px;
+    list-style: none;
+    background-color: #7382f0;
+    color: white;
+    width: 100%;
+}
+
+blockquote>span {
+    opacity: 0.5;
+}
+
+blockquote>img {
+    width: 20%;
+    border-radius: 50%;
+}
+
+.fa-quote-left {
+    display: block;
+    color: #7382f0;
+    font-size: larger;
+}
+
+.seventh {
+    background-color: #7382f0;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+.seventh img {
+    width: 75%;
+}
+
+.eighth p strong {
+    font-weight: 900;
+}
+
+.eighth form input {
+    display: block;
+    border-color: #7388fb;
+    width: 250px;
+    height: 50px;
+}
+
+.eighth form input[type="button"] {
+    background-color: #7388fb;
+    color: white;
+}
+
+footer {
+    text-align: center;
+    background-color: #444;
+    color: white;
+    height: 100px;
+    width: 100%;
+}
+
+@media (min-width: 600px) {
+    body {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .span,
+    .third {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .span span,
+    .third span {
+        width: 45%;
+        margin-left: 5px;
+    }
+
+    .line {
+        width: 100%;
+    }
+
+    .doubleline {
+        display: none;
+    }
+
+    .wrap div,
+    .wrap img {
+        width: 45%;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .wrap,
+    .wrapfirst,
+    .seventh,
+    .eighth {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .wrapfirst h4,
+    .wrapfirst p,
+    .seventh img,
+    .eighth div {
+        width: 45%;
+    }
+
+    .fifth section {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .fifth section div {
+        display: block;
+    }
+    
+    .fifth .blockSections{
+        display: flex;
+        flex-direction: column;
+    }
+    .fifth section img {
+        width: 30%;
+    }
+
+    .sixth blockqoute {
+        width: 40%;
+        margin-left: 40%;
+    }
+
+}
+
+@media (min-width: 850px) {
+    body {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .span,
+    .third {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .first4 {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .imgfirst img {
+        width: 100%;
+        height: 50%;
+    }
+
+    .imgfirst {
+        flex-grow: 1;
+    }
+
+    .wrap {
+        flex-grow: 1;
+    }
+
+    .span span,
+    .third span {
+        width: 23%;
+        margin-left: 5px;
+    }
+
+    .line {
+        width: 100%;
+    }
+
+    .doubleline {
+        display: none;
+    }
+
+    .wrap div,
+    .wrap img {
+        width: 45%;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .wrap,
+    .wrapfirst,
+    .seventh,
+    .eighth {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .wrapfirst h4,
+    .wrapfirst p,
+    .seventh img,
+    .eighth div {
+        width: 45%;
+    }
+
+    .fifth section {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    .fifth section div {
+        display: block;
+    }
+
+    .fifth section img {
+        width: 30%;
+    }
+
+    .sixth blockqoute {
+        width: 40%;
+        margin-left: 40%;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        /* flex-grow: auto; */
+
+    }
+
+    .blockSections {
+        width: 40%;
+        overflow: auto;
+    }
+}

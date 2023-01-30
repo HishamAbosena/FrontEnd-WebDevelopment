@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/1056a9816d.js" crossorigin="anonymous"></script>
+    <title>Todo List</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: sans-serif;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 15px 0px;
+        }
+
+        section {
+            background-color: #eee;
+            padding: 5px;
+            height: 80px;
+            margin: 10px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            /* border: solid black 1px; */
+            box-shadow: 1px 1px 4px #bbb;
+            border-radius: 5px;
+        }
+
+        section div {
+            display: flex;
+            align-items: center;
+            width: 80%;
+            height: 100%;
+        }
+
+        input {
+            width: 50%;
+            height: 70%;
+            margin-right: 5px;
+            padding: 5px;
+        }
+
+        input[type="button"] {
+            border-color: transparent;
+            border-radius: 10px;
+            color: white;
+            background-color: rgba(135, 206, 250, 0.7);
+        }
+
+        p span:last-child {
+            background-color: #bbb;
+            color: white;
+            width: 25px;
+            height: 70%;
+            text-align: center;
+            margin-left: 5px;
+            cursor: pointer;
+
+        }
+
+        p>span {
+            text-align: center;
+        }
+
+        i {
+            margin-right: 3px;
+            cursor: pointer;
+        }
+
+        p {
+            margin: 5px 5px;
+            border: solid 1px #eee;
+            box-shadow: 2px 2px 2px #ddd;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #msg {
+            border: none;
+            box-shadow: none;
+
+        }
+
+        .fa-gear {
+            margin: 15px;
+            box-shadow: 0 0 5px #333;
+            background-color: #999;
+            padding: 10px;
+            cursor: pointer;
+            color: white;
+            border-radius: 10px;
+        }
+
+        .modal {
+            display: none;
+        }
+
+        .content {
+            background-color: #ccc;
+            width: 80%;
+
+        }
+
+        .content ul li {
+            list-style: none;
+            margin-top: 20px;
+            cursor: pointer;
+            /* margin: auto; */
+            text-align: center;
+            padding: 15px;
+        }
+
+        .content button:hover {
+            background-color: rgba(255, 99, 71, 0.9);
+
+        }
+
+        span:hover {
+            cursor: pointer;
+            /* background-color: #bbb; */
+            transform: scale(1.2);
+            transition-property: transform;
+            transition-duration: 0.5s;
+            transition-delay: 0.2s;
+        }
+
+
+        .content button {
+            /* position: absolute;
+            top: -15px;
+            right: 15px; */
+            margin: 20px 0px;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 5px;
+            border-color: transparent;
+            font-size: large;
+            /* font-weight: 700; */
+
+        }
+
+        .content ul li:hover {
+            background-color: #555;
+            color: white;
+        }
+
+        .displayModal {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        .darkMode {
+            background-color: #555;
+            color: white;
+        }
+
+        .inputDarkMode {
+            background-color: #999;
+        }
+
+        .lineThrough {
+            text-decoration: line-through;
+            color: green;
+        }
+
+        @media (min-width: 900px) {
+            main {
+                width: 80%;
+            }
+
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .modal {
+                width: 100%;
+                left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div class="modal">
+            <div class="content">
+                <button onclick="closeModal()">Close</button>
+                <ul>
+                    <li onclick="darkMode()">Dark mode</li>
+                    <li onclick="deleteAll()">Delete All</li>
+                    <li onclick="markAllCompleted()">Mark all as completed</li>
+                </ul>
+            </div>
+        </div>
+        <h1>My To Do List</h1>
+        <section>
+            <label for="tasks">Task</label>
+            <div>
+                <input type="text" id="tasks" placeholder="Enter your task" onkeydown="keyboardInputs(event)" ;>
+                <input type="button" value="Add" onclick="addTask()" ;>
+            </div>
+        </section>
+        <!-- <p id="msg"></p> -->
+        <i class="fa-solid fa-gear" onclick="modalView()"></i>
+        <div class="inputs"></div>
+    </main>
+    <script>
+        const input_task = document.getElementById("tasks");
+        const output_task = document.querySelector(".inputs");
+        // const alertMSG = document.getElementById("msg");
+        const settings = document.querySelector(".modal");
+        const body = document.querySelector("body");
+        const section = document.querySelector("section");
+        // let ps = document.querySelectorAll("p");
+        let ps;
+        // let ps = document.getElementsByTagName("p");
+        // ps = Array.from(ps);
+        // console.log(ps);
+        let tasks = [];
+        let completedTasks = [];
+        let editedTasks = [];
+        let newTask;
+        let pp;
+        let selectedTask;
+
+        const updateList = () => {
+            output_task.innerHTML = "";
+            for (let i = 0; i < tasks.length; i++) {
+                output_task.innerHTML += `<p><i class="fa-solid fa-pen-to-square" onclick="editTask(event)";></i><span onclick="markAsCompleted(this)"  class="line">${tasks[i]}</span><span onclick="removeTask(event)">X</span></p>`;
+            }
+            importInLocalStorage();
+            pp = Array.from(document.getElementsByClassName('line'));
+            // console.log(pp[0].target);
+            // pp.forEach(displayelements);
+            // console.log(ps);
+            console.log("pp:", pp);
+        }
+        if (localStorage.getItem("DarkMode") == "on") {
+            body.classList.toggle("darkMode");
+            section.classList.toggle("inputDarkMode");
+        }
+        if (localStorage.getItem("tasks") != null) {
+            exportFromLocalStorage();
+            updateList();
+        }
+        completedTasks = [];
+        const markAsCompleted = elm => {
+            console.log("elm:", elm);
+            elm.classList.toggle("lineThrough");
+            completedTasks.forEach(item => {
+                // item==elm.innerText?"":completedTasks.push(elm.innerText);
+                if (item == elm.innerText) { }
+                else
+                    completedTasks.push(elm.innerText);
+
+            })
+            console.log('markascompleted', completedTasks);
+            localStorage.removeItem("completed");
+            const jsonCompletedTasks = JSON.stringify(completedTasks);
+            localStorage.setItem("completed", jsonCompletedTasks);
+
+        }
+        const addToCompleted = () => {
+
+            const jsonCompletedTasks = JSON.stringify(completedTasks);
+            localStorage.setItem("completed", jsonCompletedTasks);
+        }
+        console.log(localStorage.getItem("completed") !== []);
+        if (JSON.parse(localStorage.getItem("completed"))) {
+            console.log("stringaya")
+            completedTasks = JSON.parse(localStorage.getItem("completed"));
+            console.log("completedTaks:", completedTasks);
+            // localStorage.setItem('completed', '');
+            // localStorage.removeItem("completed");
+            completedTasks.forEach((item, index,arr) => {
+                for (let i = 0; i < pp.length; i++)
+                    if (item == pp[i].innerText) {
+                        console.log(item);
+                        completedTasks.unshift();
+                        // completedTasks.splice(index, 1);
+                        markAsCompleted(pp[i]);
+                        // completedTasks.pop();
+                    }
+
+            });
+            console.log('completed task', completedTasks)
+            // for (let i = 0; i < completedTasks.length; i++) {
+            //         console.log("completedTasks[i]: ",completedTasks[i]);
+            //     for (let j = 0; j < pp.length; j++) {
+            //         if (completedTasks[i] == pp[j].innerText){
+
+            //             console.log("complete,pp:",pp[j]);
+            //             markAsCompleted(pp[j]);
+            //         }
+            //     }
+            // }
+        }
+
+        const darkMode = () => {
+            body.classList.toggle("darkMode");
+            section.classList.toggle("inputDarkMode");
+            if (localStorage.getItem("DarkMode") == "on") {
+                localStorage.setItem("DarkMode", "off")
+            }
+            else
+                localStorage.setItem("DarkMode", "on");
+            closeModal();
+        }
+        const modalView = () => settings.classList.toggle("displayModal");
+        const closeModal = () => settings.classList.replace("displayModal", "modal");
+
+        // const displayelements=elm=>console.log();
+
+
+
+        const markAllCompleted = () => {
+            // debugger
+            console.log("marking completed:" + ps);
+            pp.forEach(item => item.classList.toggle("lineThrough"));
+            closeModal();
+        }
+
+
+        const deleteAll = () => {
+            tasks = [];
+            console.log(tasks);
+            updateList();
+            closeModal();
+
+        }
+        const addTask = () => {
+            console.log(input_task.value);
+            newTask = input_task.value;
+            newTask = newTask.trim();
+            console.log(newTask);
+            if (newTask != "") {
+                tasks.includes(newTask) ? alert("Task Already EXISTS") : tasks.push(newTask);
+                console.log(tasks);
+                updateList();
+                importInLocalStorage();
+                input_task.value = "";
+                input_task.focus();
+                // debugger
+                // console.log(ps);
+
+            }
+        }
+        function removeTask(element) {
+            console.log(element.target.parentElement);
+            selectedTask = element.target.parentElement.querySelector("span").innerText;
+            console.log("selected task: " + selectedTask);
+            // debugger
+            tasks = tasks.filter(findTask);
+            console.log("Tasks: " + tasks)
+            output_task.innerHTML = "";
+            updateList();
+            importInLocalStorage();
+        }
+        function editTask(evnt) {
+            selectedTask = evnt.target.parentElement.querySelector("span").innerText;
+            console.log(selectedTask);
+            tasks.forEach(indexingTask);
+            // input_task.value = selectedTask;
+            // input_task.focus();
+            removeTask(evnt);
+        }
+        function indexingTask(elm, index, arr) {
+            // console.log(elm);
+            if (selectedTask === elm) {
+                console.log(elm);
+                input_task.value = selectedTask;
+                input_task.focus();
+                // tasks.insert(
+                // addIndexedTask(index);
+            }
+            // selectedTask === elm ? console.log(elm) : "";
+        }
+        /*function addIndexedTask(index){
+            for(let i=0;i<index;i++){
+                editedTasks[i]=tasks[i];
+            }
+            for(let i=index;i<tasks.length;i++){
+                editedTasks[i+1]=tasks[i];
+            }
+            tasks=editedTasks;
+            updateList();
+        }*/
+        function findTask(task) {
+            // return task !== selectedTask;
+            if (task === selectedTask) {
+            }
+            else {
+                return task;
+            }
+        }
+        function keyboardInputs(e) {
+            // console.log(e.key);
+            // e.key=="Escape"?input_task.value="":"";
+            if (e.key == "Escape") {
+                input_task.value = "";
+                input_task.focus();
+            } else if (e.key == "Enter") {
+                // console.log("enter pressed")
+                addTask();
+
+            }
+        }
+        function importInLocalStorage() {
+            const jsonTasks = JSON.stringify(tasks);
+            localStorage.setItem("tasks", jsonTasks);
+            // console.log(jsonTasks);
+        }
+        function exportFromLocalStorage() {
+            const exportedTasks = JSON.parse(localStorage.getItem("tasks"));
+            console.log(exportedTasks);
+            tasks = exportedTasks;
+            // ps.push(...tasks);
+            console.log(tasks);
+            // return exportedTasks;
+        }
+    </script>
+</body>
+
+</html>

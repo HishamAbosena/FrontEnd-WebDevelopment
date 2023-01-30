@@ -1,0 +1,67 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: sans-serif;
+    font-size: 16px;
+    width: 100%;
+    /* height: 100%; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* flex-direction: column; */
+    /* overflow: hidden; */
+}
+.container{
+    width: 90vw;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.panel{
+    /* background-image: url("tree.jpeg"); */
+    background-size: cover;
+    border-radius: 50px;
+    color: white;
+    cursor: pointer;
+    background-position: center;
+    width: 100%;
+    height: 80vh;
+    background-repeat: no-repeat;
+    flex: 0.5;
+    margin: 10px;
+    position: relative;
+    transition-property: flex;
+    transition-duration: 0.5s;
+
+}
+.panel h3{
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    opacity: 0;
+}
+.active{
+    flex: 5;
+    transition-property: flex;
+    transition-duration: 0.7s;
+    transition-timing-function: ease-in;
+}
+.active h3{
+    opacity: 1;
+    /* transition: 0.5s opacity; */
+    transition-property: opacity;
+    transition-duration: 1s;
+    transition-timing-function: ease-in;
+    /* transit */
+}
+@media (min-width: 400px){
+    .panel{
+        margin: 2px;
+    }
+    
+}
